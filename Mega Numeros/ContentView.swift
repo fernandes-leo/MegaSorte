@@ -19,24 +19,26 @@ struct ContentView: View {
             Color.white.edgesIgnoringSafeArea(.all)
 
             VStack {
-                Text("Mega-Sena")
-                    .font(.largeTitle)
-                    .foregroundColor(.blue)
-                    .padding()
+                
+
+                Image("mega")
+                    .resizable()
+                    .scaledToFit()
 
                 if numerosSorteados.count == 6 {
                     Text("Números Sorteados:")
                         .font(.headline)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.black)
 
                     LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
                         ForEach(numerosSorteados, id: \.self) { numero in
                             Circle()
-                                .foregroundColor(.blue)
-                                .frame(width: 50, height: 50)
+                                .foregroundColor(.green)
+                                .frame(width: 90, height: 90)
                                 .overlay(
                                     Text("\(numero)")
                                         .font(.title)
+                                        .fontWeight(.bold)
                                         .foregroundColor(.white)
                                 )
                                 .padding(10)
@@ -46,27 +48,36 @@ struct ContentView: View {
                 } else {
                     Text("Pressione para sortear")
                         .font(.headline)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.black)
                         .padding()
                         .opacity(sorteando ? 0 : 1)
                         .transition(.opacity)
                 }
 
+
+
                 Button(action: {
                     sorteando.toggle()
                     self.sortearNumeros()
                 }) {
-                    Text(sorteando ? "Sorteando..." : "Sortear Números")
+                    Text("Sortear")
                         .font(.title)
                         .foregroundColor(.white)
-                        .padding()
-                        .background(Color.blue)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.green, Color.black]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
                         .cornerRadius(10)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.blue, lineWidth: 2)
+                                .stroke(Color.green, lineWidth: 0)
                         )
-                        .shadow(color: .blue, radius: 5, x: 0, y: 5)
+                        .shadow(color: .green, radius: 2, x: 0, y: 2)
                         .disabled(sorteando)
                 }
                 .padding()
@@ -77,7 +88,7 @@ struct ContentView: View {
                 }) {
                     Text("Ver Resultado e Prêmio")
                         .font(.headline)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.black)
                         .padding()
                         .opacity(numerosSorteados.count == 6 ? 1 : 0)
                         .transition(.opacity)
